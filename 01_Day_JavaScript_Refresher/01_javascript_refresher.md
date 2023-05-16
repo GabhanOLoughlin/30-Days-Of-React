@@ -2759,7 +2759,7 @@ const higherOrder = n => {
 console.log(higherOrder(2)(3)(10))
 ```
 
-Let us see were we use call back functions.For instance the _forEach_ method uses call back.
+Let us see where we use call back functions.For instance the _forEach_ method uses call back.
 
 ```js
 const numbers = [1, 2, 3, 4]
@@ -2822,7 +2822,7 @@ setInterval(callback, duration)
 function sayHello() {
   console.log('Hello')
 }
-setInterval(sayHello, 2000) // it prints hello in every 2 seconds
+setInterval(sayHello, 2000) // it prints hello every 2 seconds
 ```
 
 ##### setTimeout
@@ -3409,7 +3409,7 @@ Let see different examples
 ```js
 const countries = ['Finland', 'Estonia', 'Sweden', 'Norway']
 countries.forEach(function (country, index, arr) {
-  console.log(i, country.toUpperCase())
+  console.log(index, country.toUpperCase())
 })
 ```
 
@@ -3432,9 +3432,9 @@ For example if we like to change each country to uppercase and store it back to 
 ```js
 const countries = ['Finland', 'Estonia', 'Sweden', 'Norway']
 const newCountries = []
-countries.forEach((country) => newCountries.push(country))
+countries.forEach((country) => newCountries.push(country.ToUpperCase()))
 
-console.log(newCountries) // ["Finland", "Estonia", "Sweden", "Norway"]
+console.log(newCountries) // ["FINLAND", "ESTONIA", "SWEDEN", "NORWAY"]
 ```
 
 Let us see more examples. For instance if we want to sum an array of numbers we can use forEach or reduce. Let us see how we use forEach to sum all numbers in an array.
