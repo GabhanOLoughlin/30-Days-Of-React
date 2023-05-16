@@ -3661,7 +3661,7 @@ Let us find the first country which contains a substring way
 
 ```js
 const countries = ['Finland', 'Estonia', 'Sweden', 'Norway', 'Iceland']
-const countryWithWay = countries.find((country) => country.includes('way'))
+const countriesWithWay = countries.find((country) => country.includes('way'))
 console.log(countriesWithWay) // Norway
 ```
 
