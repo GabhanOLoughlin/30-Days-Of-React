@@ -11,7 +11,6 @@ const welcome = 'Welcome to 30 Days Of React'
 const Header = () => (
   <header>
     <div className='header-wrapper'>
-      {title}
       <h1>{welcome}</h1>
       <h2>Getting Started React</h2>
       <h3>JavaScript Library</h3>
