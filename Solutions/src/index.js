@@ -6,15 +6,42 @@ import { createRoot } from 'react-dom/client';
 
 import Gabhan from './images/Gabhan.jpg';
 
+const showDate = (time) => {
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ]
+
+  const month = months[time.getMonth()].slice(0, 3)
+  const year = time.getFullYear()
+  const date = time.getDate()
+  return ` ${month} ${date}, ${year}`
+}
+
 const Header = (props) => {
   console.log(props);
+  const data = props.data;
+  const {
+    title,
+    subtitle,    
+  } = data
   return (
     <header>
       <div className='header-wrapper'>
-        <h1>{props.welcome}</h1>
-        <h2>{props.title}</h2>
-        <h3>{props.subtitle}</h3>
-        <small>{props.date}</small>
+        <h1>{data.welcome}</h1>
+        <h2>{title}</h2>
+        <h3>{subtitle}</h3>
+        <small>{showDate(props.data.date)}</small>
       </div>
     </header>
   )
@@ -42,13 +69,16 @@ const TechList = (props) => {
   const techsFormatted = props.skills.map((tech) => <li key={tech}>{tech}</li>)
   return <ul>{techsFormatted}</ul>
 }
+
+const Button = (props) => <button onClick={props.onClick}>{props.text}</button>
+
 // JSX element, main
-const Main = () => (
+const Main = (props) => (
   <main>
     <div className='main-wrapper'>
       <p>Prerequisite to get started react.js:</p>
       <TechList skills={['HTML', 'CSS', 'C#', 'React']} />
-      <UserCard firstName='Gabhan' />    
+      <UserCard firstName={props.firstName} />    
     </div>
   </main>
 )
@@ -76,20 +106,25 @@ const Status = (props) => {
 
 // JSX element, app, a container or a parent
 const App = () => {
-  const welcome='Welcome to 30 Days Of React' 
-  const title='Getting Started'
-  const subtitle='Every Day is a Learning Day!'
-  const date='13th June 2023'   
+  const data = {
+   welcome:'Welcome to 30 Days Of React',
+   title:'Getting Started',
+   subtitle:'Every Day is a Learning Day!',
+   author: {
+      firstName: 'Gabhan',
+      lastName: 'OLoughlin',
+    },
+   date: new Date(),
+  }
 
+  const sayHi = () => {
+    alert('Hi!')
+  }
 return (
   <div className='app'>   
-    <Header 
-      welcome={welcome}
-      title={title}
-      subtitle={subtitle}
-      date={date}         
-      />    
-    <Main />
+    <Header data={data} />    
+    <Main firstName={data.author.firstName} />
+    <Button text='Say Hi!!' onClick={sayHi} />
     <Footer />
   </div>
 )
