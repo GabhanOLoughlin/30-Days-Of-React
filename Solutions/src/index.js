@@ -28,7 +28,14 @@ const showDate = (time) => {
   return ` ${month} ${date}, ${year}`
 }
 
-const Header = ({data: {welcome, title, subtitle, author: {firstName, lastName}, date}}) => {
+const Header = ({
+  data: {
+    welcome, 
+    title, 
+    subtitle, 
+    author: {firstName, lastName}, 
+    date}
+  }) => {
   return (
     <header>
       <div className='header-wrapper'>
