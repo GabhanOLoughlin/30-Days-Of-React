@@ -28,40 +28,27 @@ const showDate = (time) => {
   return ` ${month} ${date}, ${year}`
 }
 
-const Header = (props) => {
-  console.log(props);
-  const data = props.data;
-  const {
+const Header = ({
+  data: {
+    welcome,
     title,
-    subtitle,    
-  } = data
+    subtitle,
+    author: { firstName, lastName },
+    date,
+  },
+}) => {
   return (
     <header>
       <div className='header-wrapper'>
-        <h1>{data.welcome}</h1>
+        <h1>{welcome}</h1>
         <h2>{title}</h2>
         <h3>{subtitle}</h3>
-        <small>{showDate(props.data.date)}</small>
+        <p>
+          {firstName} {lastName}
+        </p>
+        <small>{showDate(date)}</small>
       </div>
     </header>
-  )
-}
-
-const UserCard = (props) => {
-  const yearBorn = 1972
-  const currentYear = 2023
-  const age = currentYear - yearBorn  
-  let status = age >= 18
-
-  console.log(props);
-
-  return (
-    <div className='user-card'>
-      <img src={Gabhan} alt='' />
-      <h2>{props.firstName}</h2>
-      <Age age={age} />
-      <Status status={status} />
-    </div>
   )
 }
 
@@ -70,64 +57,91 @@ const TechList = (props) => {
   return <ul>{techsFormatted}</ul>
 }
 
-const Button = (props) => <button onClick={props.onClick}>{props.text}</button>
+const UserCard = ({ user: { firstName, lastName, image } }) => (
+  <div className='user-card'>
+    <img src={image} alt={firstName} />
+    <h2>
+      {firstName}
+      {lastName}
+    </h2>
+  </div>
+)
+
+const Button = ({ text, onClick, style }) => (
+  <button style={style} onClick={onClick}>
+    {text}
+  </button>
+)
+
+const buttonStyles = {
+  backgroundColor: '#61dbfb',
+  padding: 10,
+  border: 'none',
+  borderRadius: 5,
+  margin: 3,
+  cursor: 'pointer',
+  fontSize: 18,
+  color: 'white',
+}
 
 // JSX element, main
-const Main = (props) => (
+const Main = ({ user, techs, greetPeople, handleTime }) => (
   <main>
     <div className='main-wrapper'>
       <p>Prerequisite to get started react.js:</p>
-      <TechList skills={['HTML', 'CSS', 'C#', 'React']} />
-      <UserCard firstName={props.firstName} />    
+      <TechList skills={techs} />
+      <UserCard user={user} />
+      <Button text='Greet People' onClick={greetPeople} style={buttonStyles} />
+      <Button text='Show Time' onClick={handleTime} style={buttonStyles} />
     </div>
   </main>
 )
 
 // JSX element, footer
-const Footer = () => (
+const Footer = ({ copyRight }) => (
   <footer>
-  <div className='footer-wrapper'>
-    <p>Copyright 2020</p>
+    <div className='footer-wrapper'>
+      <p>Copyright {copyRight.getFullYear()}</p>
     </div>
   </footer>
 )
 
-const Age = (props) => {
-  return (
-  <div>The person is {props.age} years old.</div>
-  )
-}
-
-const Status = (props) => {
-  // ternary operator to check the status of the person
-  let status = props.status ? 'Old enough to drive' : 'Too young for driving'
-  return <p>{status}</p>
-}
-
 // JSX element, app, a container or a parent
 const App = () => {
   const data = {
-   welcome:'Welcome to 30 Days Of React',
-   title:'Getting Started',
-   subtitle:'Every Day is a Learning Day!',
-   author: {
+    welcome: 'Welcome to 30 Days Of React',
+    title: 'Getting Started React',
+    subtitle: 'JavaScript Library',
+    author: {
       firstName: 'Gabhan',
       lastName: 'OLoughlin',
     },
-   date: new Date(),
+    date: new Date(), // date needs to be formatted to a human readable format
+  }
+  const date = new Date()
+  const techs = ['HTML', 'CSS', 'JavaScript']
+  // copying the author from data object to user variable using spread operator
+  const user = { ...data.author, image: Gabhan }
+
+  const handleTime = () => {
+    alert(showDate(new Date()))
+  }
+  const greetPeople = () => {
+    alert('Welcome to 30 Days Of React Challenge, 2020')
   }
 
-  const sayHi = () => {
-    alert('Hi!')
-  }
-return (
-  <div className='app'>   
-    <Header data={data} />    
-    <Main firstName={data.author.firstName} />
-    <Button text='Say Hi!!' onClick={sayHi} />
-    <Footer />
-  </div>
-)
+  return (
+    <div className='app'>
+      <Header data={data} />
+      <Main
+        user={user}
+        techs={techs}
+        handleTime={handleTime}
+        greetPeople={greetPeople}
+      />
+      <Footer copyRight={date} />
+    </div>
+  )
 }
 
 const rootElement = document.getElementById("root");
