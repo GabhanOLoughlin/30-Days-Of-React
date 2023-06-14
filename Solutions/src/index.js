@@ -5,7 +5,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 const Numbers = ({numbers}) => {
-  const list = numbers.map((number) => <li>{number}</li>)
+  const list = numbers.map((number) => <li key={number}>{number}</li>)
   return list
 }
 
@@ -51,7 +51,7 @@ const Country = ({ country: { name, city } }) => {
 
 // countries component
 const Countries = ({ countries }) => {
-  const countryList = countries.map((country) => <Country country={country} />)
+  const countryList = countries.map((country) => <Country key={country.name} country={country} />)
   return <div>{countryList}</div>
 }
 
