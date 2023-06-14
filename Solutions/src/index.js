@@ -28,15 +28,10 @@ const showDate = (time) => {
   return ` ${month} ${date}, ${year}`
 }
 
-const Header = ({
-  data: {
-    welcome,
-    title,
-    subtitle,
-    author: { firstName, lastName },
-    date,
-  },
-}) => {
+const Header = (props) => {
+  const data = props.data;
+  const {welcome, title, subtitle, author, date } = data;
+  const {firstName, lastName} = author;
   return (
     <header>
       <div className='header-wrapper'>
@@ -118,7 +113,7 @@ const App = () => {
     },
     date: new Date(), // date needs to be formatted to a human readable format
   }
-  const date = new Date()
+
   const techs = ['HTML', 'CSS', 'JavaScript']
   // copying the author from data object to user variable using spread operator
   const user = { ...data.author, image: Gabhan }
@@ -139,7 +134,7 @@ const App = () => {
         handleTime={handleTime}
         greetPeople={greetPeople}
       />
-      <Footer copyRight={date} />
+      <Footer copyRight={data.date} />
     </div>
   )
 }
