@@ -28,9 +28,7 @@ const showDate = (time) => {
   return ` ${month} ${date}, ${year}`
 }
 
-const Header = (props) => {
-  const data = props.data;
-  const {welcome, title, subtitle, author: {firstName, lastName}, date } = data;
+const Header = ({data: {welcome, title, subtitle, author: {firstName, lastName}, date}}) => {
   return (
     <header>
       <div className='header-wrapper'>
