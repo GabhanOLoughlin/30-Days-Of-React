@@ -4,77 +4,83 @@ import React from 'react';
 
 import { createRoot } from 'react-dom/client';
 
-const Numbers = ({numbers}) => {
-  const list = numbers.map((number) => <li key={number}>{number}</li>)
-  return list
+class Header extends React.Component {
+  constructor(props) {
+    super(props)
+    // the code inside the constructor run before any other code
+  }
+  render() {
+    return (
+      <header>
+        <div className='header-wrapper'>
+          <h1>Welcome to 30 Days Of React</h1>
+          <h2>Getting Started React</h2>
+          <h3>JavaScript Library</h3>
+          <p>Gabhan OLoughlin</p>
+          <small>June 14th 2023</small>
+        </div>
+      </header>
+    )
+  }
 }
 
-const skills = [
-  ['HTML', 10],
-  ['CSS', 7],
-  ['JavaScript', 9],
-  ['React', 8],
-]
-
-// Skill Component
-const Skill = ({ skill: [tech, level] }) => (
-  <li>
-    {tech} {level}
-  </li>
-)
-
-
-// Skills Component
-const Skills = ({ skills }) => {
-  const skillsList = skills.map((skill) => <Skill skill={skill} />)
-  console.log(skillsList)
-  return <ul>{skillsList}</ul>
+class TechList extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  render() {
+    const techs = ['HTML', 'CSS', 'JavaScript']
+    const techsFormatted = techs.map((tech) => <li key={tech}>{tech}</li>)
+    return techsFormatted
+  }
 }
 
-const countries = [
-  { name: 'Finland', city: 'Helsinki' },
-  { name: 'Sweden', city: 'Stockholm' },
-  { name: 'Denmark', city: 'Copenhagen' },
-  { name: 'Norway', city: 'Oslo' },
-  { name: 'Iceland', city: 'Reykjavík' },
-]
-
-// Country component
-const Country = ({ country: { name, city } }) => {
-  return (
-    <div>
-      <h3>Country: {name}</h3>
-      <small>Capital: {city}</small>
-    </div>
-  )
+class Main extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  render() {
+    return (
+      <main>
+        <div className='main-wrapper'>
+          <p>Prerequisite to get started react.js:</p>
+          <ul>
+            <TechList />
+          </ul>
+        </div>
+      </main>
+    )
+  }
 }
 
-// countries component
-const Countries = ({ countries }) => {
-  const countryList = countries.map((country) => <Country key={country.name} country={country} />)
-  return <div>{countryList}</div>
+class Footer extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  render() {
+    return (
+      <footer>
+        <div className='footer-wrapper'>
+          <p>Copyright 2023</p>
+        </div>
+      </footer>
+    )
+  }
 }
 
-const App = () => {
-  const numbers = [1, 2, 3, 4, 5]
-  return (
-    <div className='container'>
-      <div>
-        <h1>Numbers List</h1>        
-        <ul>
-        <Numbers numbers={numbers} />
-        </ul>
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  render() {
+    return (
+      <div className='app'>
+        <Header />
+        <Main />
+        <Footer />
       </div>
-      <div>
-        <h1>Skills Level</h1>
-        <Skills skills={skills} />
-      </div>
-      <div>
-      <h1>Countries List</h1>
-        <Countries countries={countries} />
-      </div>
-    </div>
-  )
+    )
+  }
 }
 
 const rootElement = document.getElementById("root");
