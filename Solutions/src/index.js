@@ -4,11 +4,36 @@ import React from 'react';
 
 import { createRoot } from 'react-dom/client';
 
+import gabhanImage from './images/Gabhan.jpg';
+
+const UserCard = ({ user: { firstName, lastName, image } }) => (
+  <div className='user-card'>
+    <img src={image} alt={firstName} />
+    <h2>
+      {firstName}
+      {lastName}
+    </h2>
+  </div>
+)
+
+const Button = ({ text, onClick, style }) => (
+  <button style={style} onClick={onClick}>
+    {text}
+  </button>
+)
+
+const buttonStyles = {
+  backgroundColor: '#61dbfb',
+  padding: 10,
+  border: 'none',
+  borderRadius: 5,
+  margin: 3,
+  cursor: 'pointer',
+  fontSize: 18,
+  color: 'white',
+}
+
 class Header extends React.Component {
-  constructor(props) {
-    super(props)
-    // the code inside the constructor run before any other code
-  }
   render() {
     console.log(this.props.data)
     const {
@@ -34,9 +59,6 @@ class Header extends React.Component {
 }
 
 class TechList extends React.Component {
-  constructor(props) {
-    super(props)
-  }
   render() {
     const {techs} = this.props
     const techsFormatted = techs.map((tech) => <li key={tech}>{tech}</li>)
@@ -56,6 +78,17 @@ class Main extends React.Component {
           <ul>
             <TechList techs={this.props.techs} />
           </ul>
+          <UserCard user={this.props.user} />
+          <Button
+            text='Greet People'
+            onClick={this.props.greetPeople}
+            style={buttonStyles}
+          />
+          <Button
+            text='Show Time'
+            onClick={this.props.handleTime}
+            style={buttonStyles}
+          />
         </div>
       </main>
     )
@@ -63,9 +96,6 @@ class Main extends React.Component {
 }
 
 class Footer extends React.Component {
-  constructor(props) {
-    super(props)
-  }
   render() {
     return (
       <footer>
@@ -78,6 +108,34 @@ class Footer extends React.Component {
 }
 
 class App extends React.Component {
+  greetPeople = () => {
+    alert('Welcome to 30 Days Of React Challenge, 2023')
+  }
+  handleTime = () => {
+    alert(this.showDate(new Date()))
+  }
+  showDate = (time) => {
+    const months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ]
+
+    const month = months[time.getMonth()].slice(0, 3)
+    const year = time.getFullYear()
+    const date = time.getDate()
+    return ` ${month} ${date}, ${year}`
+  }
+
   render() {
     const data = {
       welcome: 'Welcome to 30 Days Of React',
@@ -90,11 +148,12 @@ class App extends React.Component {
       date: '14th June 2023',
     }
     const techs = ['HTML', 'C#', 'CSS', 'React']
+    const user = { ...data.author, image: gabhanImage }
 
     return (
       <div className='app'>
         <Header data={data} />
-        <Main techs={techs} />
+        <Main techs={techs} user={user} handleTime={this.handleTime} greetPeople={this.greetPeople} />
         <Footer date={new Date()} />
       </div>
     )
