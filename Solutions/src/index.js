@@ -38,7 +38,7 @@ class TechList extends React.Component {
     super(props)
   }
   render() {
-    const techs = ['HTML', 'CSS', 'JavaScript']
+    const {techs} = this.props
     const techsFormatted = techs.map((tech) => <li key={tech}>{tech}</li>)
     return techsFormatted
   }
@@ -54,7 +54,7 @@ class Main extends React.Component {
         <div className='main-wrapper'>
           <p>Prerequisite to get started react.js:</p>
           <ul>
-            <TechList />
+            <TechList techs={this.props.techs} />
           </ul>
         </div>
       </main>
@@ -70,30 +70,35 @@ class Footer extends React.Component {
     return (
       <footer>
         <div className='footer-wrapper'>
-          <p>Copyright 2023</p>
+          <p>Copyright {this.props.date.getFullYear()}</p>
         </div>
       </footer>
     )
   }
 }
 
-const App = () => {
-  const data = {
-    welcome: 'Welcome to 30 Days Of React',
-    title: 'Getting Started React',
-    subtitle: 'JavaScript Library',
-    author: {
-      firstName: 'Gabhan',
-      lastName: 'OLoughlin',
-    },
-    date: '14th June 2023',
-  }
+class App extends React.Component {
+  render() {
+    const data = {
+      welcome: 'Welcome to 30 Days Of React',
+      title: 'Getting Started React',
+      subtitle: 'JavaScript Library',
+      author: {
+        firstName: 'Gabhan',
+        lastName: 'OLoughlin',
+      },
+      date: '14th June 2023',
+    }
+    const techs = ['HTML', 'C#', 'CSS', 'React']
 
-  return (
-    <div className='app'>
-      <Header data={data} />
-    </div>
-  )
+    return (
+      <div className='app'>
+        <Header data={data} />
+        <Main techs={techs} />
+        <Footer date={new Date()} />
+      </div>
+    )
+  }
 }
 
 const rootElement = document.getElementById("root");
