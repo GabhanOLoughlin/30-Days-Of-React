@@ -151,6 +151,18 @@ class Footer extends React.Component {
   }
 }
 
+const Login = () => (
+  <div>
+    <h3>Please Login</h3>
+  </div>
+)
+
+const Welcome = (props) => (
+  <div>
+    <h1>Welcome to 30 Days Of React</h1>
+  </div>
+)
+
 class App extends React.Component {
   state = {
     count: 0,
@@ -215,23 +227,14 @@ class App extends React.Component {
     const techs = ['HTML', 'CSS', 'JavaScript']
     const user = { ...data.author, image: gabhanImage }
 
-    let status
-    let text
-
-    if (this.state.loggedIn) {
-      status = <h3>Welcome to 30 days of react</h3>
-      text = 'Logout'
-    }
-    else {
-      status = <h3>Please Login</h3>
-      text = 'Login'
-    }
+    const status = this.state.loggedIn ? <Welcome /> : <Login />
+    
 
    return (
     <div className='App'>
       <Header data={data} />
       {status}
-      <Button text={text} style={buttonStyles} onClick={this.handleLogin} />
+      <Button text={this.state.loggedIn ? 'Logout' : 'Login'} style={buttonStyles} onClick={this.handleLogin} />
       <Main
         user={user}
         techs={techs}
