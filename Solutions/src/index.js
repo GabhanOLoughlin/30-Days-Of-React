@@ -228,14 +228,14 @@ class App extends React.Component {
     const user = { ...data.author, image: gabhanImage }
 
     const status = this.state.loggedIn ? <Welcome /> : <Login />
-    
+    const { loggedIn } = this.state
 
    return (
     <div className='App'>
       <Header data={data} />
       {status}
       <Button text={this.state.loggedIn ? 'Logout' : 'Login'} style={buttonStyles} onClick={this.handleLogin} />
-      <Main
+      {loggedIn && (<Main
         user={user}
         techs={techs}
         handleTime={this.handleTime}
@@ -243,7 +243,7 @@ class App extends React.Component {
         addOne={this.addOne}
         subtractOne={this.subtractOne}
         count={this.state.count}
-      />
+      />)}
       <Footer date={new Date()} />
     </div>
    )
