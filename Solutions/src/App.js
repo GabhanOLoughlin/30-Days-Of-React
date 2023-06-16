@@ -1,8 +1,50 @@
 import './App.css';
 
-import Header from './components/header/Header';
+import { useState } from 'react';
 
-const App = () => { 
+import Footer from './components/footer/Footer';
+import Header from './components/header/Header';
+import Main from './components/main/Main';
+
+function App() { 
+  const [message, setMessage ] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const showDate = (time) => {
+    const months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ]
+
+  const month = months[time.getMonth()].slice(0, 3)
+  const year = time.getFullYear()
+  const date = time.getDate()
+  return `${month} ${date}, ${year}`
+}
+
+  const handleLogin = () => {
+    setLoggedIn(!loggedIn); 
+  };
+
+  const handleTime = () => {    
+    setMessage(showDate(new Date()))
+  }
+
+  const greetPeople = () => {
+    setMessage('Welcome to 30 Days Of React Challenge, 2020');    
+  }
+
+  const techs= ['HTML', 'CSS', 'JS']
 
   const data = {
     welcome: '30 Days Of React',
@@ -18,6 +60,13 @@ const App = () => {
   return (
     <div>      
       <Header data={data} />
+      <Main techs={techs}
+          handleTime={handleTime}
+          greetPeople={greetPeople}          
+          handleLogin={handleLogin}
+          message={message}
+          loggedIn={loggedIn} />
+      <Footer date={new Date()} />
     </div>
   )
 }
