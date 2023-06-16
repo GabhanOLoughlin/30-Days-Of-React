@@ -50,13 +50,6 @@ class TechList extends React.Component {
   }
 }
 
-// A button component
-const Button = ({ text, onClick, style }) => (
-  <button style={style} onClick={onClick}>
-    {text}
-  </button>
-)
-
 // CSS styles in JavaScript Object
 const buttonStyles = {
   backgroundColor: '#61dbfb',
@@ -69,6 +62,12 @@ const buttonStyles = {
   color: 'white',
 }
 
+const Button = ({ text, onClick, style }) => (
+  <button style={style} onClick={onClick}>
+    {text}
+  </button>
+)
+
 // class based component
 class Header extends React.Component {
   render() {    
@@ -79,17 +78,13 @@ class Header extends React.Component {
       author: { firstName, lastName },
       date,            
     } = this.props.data
-    const {
-      backgroundColor
-    } = this.props
-    console.log(backgroundColor)
+
     return (
-      <header style={this.props.styles}>
+      <header>
         <div className='header-wrapper'>          
           <h1>{welcome}</h1>
           <h2>{title}</h2>
           <h3>{subtitle}</h3>
-          <h4>{backgroundColor}</h4>
           <p>
             {firstName} {lastName}
           </p>
@@ -117,7 +112,6 @@ class Main extends React.Component {
       user,
       greetPeople,
       handleTime,
-      changeBackground,
       count,
       addOne,
       subtractOne,
@@ -136,11 +130,6 @@ class Main extends React.Component {
             style={buttonStyles}
           />
           <Button text='Show Time' onClick={handleTime} style={buttonStyles} />
-          <Button
-            text='Change Background'
-            onClick={changeBackground}
-            style={buttonStyles}
-          />
           <Count count={count} addOne={addOne} subtractOne={subtractOne} />
         </div>
       </main>
@@ -165,28 +154,25 @@ class Footer extends React.Component {
 class App extends React.Component {
   state = {
     count: 0,
-    image: 'https://t4.ftcdn.net/jpg/00/97/58/97/360_F_97589769_t45CqXyzjz0KXwoBZT9PRaWGHRk5hQqQ.jpg',
-    backgroundColor: '#000000',
+    loggedIn: false,
+  }
+
+  handleLogin = () => {
+    this.setState({
+      loggedIn: !this.state.loggedIn,
+    })
   }
 
   addOne = () => {
     this.setState({ count: this.state.count + 1 })
   }
+
   subtractOne = () => {
     this.setState({ count: this.state.count - 1 })
   }
 
   handleTime = () => {
     alert(this.showDate(new Date()))
-  }
-
-  changeAnimal = () => {
-    let dogURL =
-      'https://img.freepik.com/free-photo/isolated-happy-smiling-dog-white-background-portrait-4_1562-693.jpg'
-    let catURL =
-      'https://t4.ftcdn.net/jpg/00/97/58/97/360_F_97589769_t45CqXyzjz0KXwoBZT9PRaWGHRk5hQqQ.jpg'
-    let image = this.state.image === catURL ? dogURL : catURL
-    this.setState({ image })
   }
 
   showDate = (time) => {
@@ -214,13 +200,6 @@ class App extends React.Component {
     alert('Welcome to 30 Days Of React Challenge, 2020')
   }
 
-  changeBackground = () => {
-    let lightMode = '#61dbfb';
-    let darkMode = '#ffffff';
-    let backgroundColor = this.state.backgroundColor === lightMode ? darkMode : lightMode
-    this.setState({backgroundColor})
-  }
-
   render() {
 
     const data = {
@@ -236,17 +215,28 @@ class App extends React.Component {
     const techs = ['HTML', 'CSS', 'JavaScript']
     const user = { ...data.author, image: gabhanImage }
 
+    let status
+    let text
 
+    if (this.state.loggedIn) {
+      status = <h3>Welcome to 30 days of react</h3>
+      text = 'Logout'
+    }
+    else {
+      status = <h3>Please Login</h3>
+      text = 'Login'
+    }
 
    return (
     <div className='App'>
-      <Header data={data} backgroundColor={this.state.backgroundColor} />
+      <Header data={data} />
+      {status}
+      <Button text={text} style={buttonStyles} onClick={this.handleLogin} />
       <Main
         user={user}
         techs={techs}
         handleTime={this.handleTime}
         greetPeople={this.greetPeople}
-        changeBackground={this.changeBackground}
         addOne={this.addOne}
         subtractOne={this.subtractOne}
         count={this.state.count}
