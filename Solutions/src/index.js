@@ -4,84 +4,21 @@ import React from 'react';
 
 import { createRoot } from 'react-dom/client';
 
-import gabhanImage from './images/Gabhan.jpg';
-
-const showDate = (time) => {
-  const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ]
-
-  const month = months[time.getMonth()].slice(0, 3)
-  const year = time.getFullYear()
-  const date = time.getDate()
-  return ` ${month} ${date}, ${year}`
-}
-
-// User Card Component
-const UserCard = ({ user: { firstName, lastName, image } }) => (
-  <div className='user-card'>
-    <img src={image} alt={firstName} />
-    <h2>
-      {firstName}
-      {lastName}
-    </h2>
-  </div>
-)
-
-class TechList extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-  render() {
-    const { techs } = this.props
-    const techsFormatted = techs.map((tech) => <li key={tech}>{tech}</li>)
-    return techsFormatted
-  }
-}
-
-// CSS styles in JavaScript Object
-const buttonStyles = {
-  backgroundColor: '#61dbfb',
-  padding: 10,
-  border: 'none',
-  borderRadius: 5,
-  margin: 3,
-  cursor: 'pointer',
-  fontSize: 18,
-  color: 'white',
-}
-
-const Button = ({ text, onClick, style }) => (
-  <button style={style} onClick={onClick}>
-    {text}
-  </button>
-)
-
 // class based component
 class Header extends React.Component {
-  render() {    
+  render() {
+    console.log(this.props.data)
     const {
       welcome,
       title,
       subtitle,
       author: { firstName, lastName },
-      date,            
+      date,
     } = this.props.data
 
     return (
-      <header>
-        <div className='header-wrapper'>          
+      <header style={this.props.styles}>
+        <div className='header-wrapper'>
           <h1>{welcome}</h1>
           <h2>{title}</h2>
           <h3>{subtitle}</h3>
@@ -95,46 +32,103 @@ class Header extends React.Component {
   }
 }
 
-const Count = ({ count, addOne, subtractOne }) => (
+const Message = ({ message }) => (
   <div>
-    <h1>{count}</h1>
-    <div>
-      <Button text='+1' onClick={addOne} style={buttonStyles} />
-      <Button text='-1' onClick={subtractOne} style={buttonStyles} />
-    </div>
+    <h1>{message}</h1>
+  </div>
+)
+const Login = () => (
+  <div>
+    <h3>Please Login</h3>
+  </div>
+)
+const Welcome = (props) => (
+  <div>
+    <h1>Welcome to 30 Days Of React</h1>
   </div>
 )
 
+// A button component
+const Button = ({ text, onClick, style }) => (
+  <button style={style} onClick={onClick}>
+    {text}
+  </button>
+)
+
+// TechList Component
+// class base component
+class TechList extends React.Component {
+  render() {
+    const { techs } = this.props
+    const techsFormatted = techs.map((tech) => <li key={tech}>{tech}</li>)
+    return techsFormatted
+  }
+}
+
+// Main Component
+// Class Component
 class Main extends React.Component {
   render() {
     const {
       techs,
-      user,
       greetPeople,
       handleTime,
-      count,
-      addOne,
-      subtractOne,
+      loggedIn,
+      handleLogin,
+      message,
     } = this.props
+    console.log(message)
+
+    const status = loggedIn ? <Welcome /> : <Login />
     return (
       <main>
         <div className='main-wrapper'>
           <p>Prerequisite to get started react.js:</p>
           <ul>
-            <TechList techs={techs} />
+            <TechList techs={this.props.techs} />
           </ul>
-          <UserCard user={user} />
-          <Button
-            text='Greet People'
-            onClick={greetPeople}
-            style={buttonStyles}
-          />
-          <Button text='Show Time' onClick={handleTime} style={buttonStyles} />
-          <Count count={count} addOne={addOne} subtractOne={subtractOne} />
+          {techs.length === 3 && (
+            <p>You have all the prerequisite courses to get started React</p>
+          )}
+          <div>
+            <Button
+              text='Show Time'
+              onClick={handleTime}
+              style={buttonStyles}
+            />{' '}
+            <Button
+              text='Greet People'
+              onClick={greetPeople}
+              style={buttonStyles}
+            />
+            {!loggedIn && <p>Please login to access more information about 30 Days Of React challenge</p>}
+          </div>
+          <div style={{ margin: 30 }}>
+            <Button
+              text={loggedIn ? 'Logout' : 'Login'}
+              style={buttonStyles}
+              onClick={handleLogin}
+            />
+            <br />
+            {status}
+          </div>
+          <Message message={message} />
         </div>
       </main>
     )
   }
+}
+
+// CSS styles in JavaScript Object
+const buttonStyles = {
+  backgroundColor: '#61dbfb',
+  padding: 10,
+  border: 'none',
+  borderRadius: 5,
+  margin: '3px auto',
+  cursor: 'pointer',
+  fontSize: 22,
+  color: 'white',
 }
 
 // Footer Component
@@ -151,42 +145,17 @@ class Footer extends React.Component {
   }
 }
 
-const Login = () => (
-  <div>
-    <h3>Please Login</h3>
-  </div>
-)
-
-const Welcome = (props) => (
-  <div>
-    <h1>Welcome to 30 Days Of React</h1>
-  </div>
-)
-
 class App extends React.Component {
   state = {
-    count: 0,
     loggedIn: false,
+    techs: ['HTML', 'CSS', 'JS'],
+    message: 'Click show time or Greet people to change me',
   }
-
   handleLogin = () => {
     this.setState({
       loggedIn: !this.state.loggedIn,
     })
   }
-
-  addOne = () => {
-    this.setState({ count: this.state.count + 1 })
-  }
-
-  subtractOne = () => {
-    this.setState({ count: this.state.count - 1 })
-  }
-
-  handleTime = () => {
-    alert(this.showDate(new Date()))
-  }
-
   showDate = (time) => {
     const months = [
       'January',
@@ -202,51 +171,49 @@ class App extends React.Component {
       'November',
       'December',
     ]
+
     const month = months[time.getMonth()].slice(0, 3)
     const year = time.getFullYear()
     const date = time.getDate()
-    return ` ${month} ${date}, ${year}`
+    return `${month} ${date}, ${year}`
   }
-
+  handleTime = () => {
+    let message = this.showDate(new Date())
+    this.setState({ message })
+  }
   greetPeople = () => {
-    alert('Welcome to 30 Days Of React Challenge, 2020')
+    let message = 'Welcome to 30 Days Of React Challenge, 2020'
+    this.setState({ message })
   }
 
   render() {
-
     const data = {
-      welcome: 'Welcome to 30 Days Of React',
+      welcome: '30 Days Of React',
       title: 'Getting Started React',
       subtitle: 'JavaScript Library',
       author: {
         firstName: 'Gabhan',
         lastName: 'OLoughlin',
       },
-      date: 'June 15th 2023',
+      date: 'Oct 9, 2020',
     }
-    const techs = ['HTML', 'CSS', 'JavaScript']
-    const user = { ...data.author, image: gabhanImage }
 
-    const status = this.state.loggedIn ? <Welcome /> : <Login />
-    const { loggedIn } = this.state
+    return (
+      <div className='app'>
+        <Header data={data} />
 
-   return (
-    <div className='App'>
-      <Header data={data} />
-      {status}
-      <Button text={this.state.loggedIn ? 'Logout' : 'Login'} style={buttonStyles} onClick={this.handleLogin} />
-      {loggedIn && (<Main
-        user={user}
-        techs={techs}
-        handleTime={this.handleTime}
-        greetPeople={this.greetPeople}
-        addOne={this.addOne}
-        subtractOne={this.subtractOne}
-        count={this.state.count}
-      />)}
-      <Footer date={new Date()} />
-    </div>
-   )
+        <Main
+          techs={this.state.techs}
+          handleTime={this.handleTime}
+          greetPeople={this.greetPeople}
+          loggedIn={this.state.loggedIn}
+          handleLogin={this.handleLogin}
+          message={this.state.message}
+        />
+
+        <Footer date={new Date()} />
+      </div>
+    )
   }
 }
 
