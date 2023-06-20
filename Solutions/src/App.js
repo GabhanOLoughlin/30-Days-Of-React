@@ -48,6 +48,10 @@ function App() {
       css: false,
       javascript: false,
     },
+    touched: {
+      firstName: false,
+      lastName: false,
+    },
   });
 
   const handleChange = (e) => {    
@@ -65,6 +69,26 @@ function App() {
     }
   }
 
+  const handleBlur = (e) => {
+    const { name, value } = e.target
+    setState({ ...state, touched: { ...state.touched, [name]: true } })
+  }
+
+  const validate = () => {
+    // Object to collect error feedback and to display on the form
+    const errors = {
+      firstName: '',
+    }
+
+    if (
+      (state.touched.firstName && state.firstName.length < 3) ||
+      (state.touched.firstName && state.firstName.length > 12)
+    ) {
+      errors.firstName = 'First name must be between 2 and 12'
+    }
+    return errors
+  }
+
   const handleSubmit = (e) => {
     /* 
      e.preventDefault()
@@ -80,10 +104,12 @@ function App() {
     console.log({state})
   }
 
+  const { firstName } = validate()
+
   return (
     <div className='App'>      
       <h3>Add Student</h3>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} noValidate>
           <div className='row'>
             <div className='form-group'>
               <label htmlFor='firstName'>First Name </label>
@@ -93,7 +119,10 @@ function App() {
                 value={state.firstName}
                 onChange={handleChange}
                 placeholder='First Name'
+                onBlur={handleBlur}
               />
+              <br />
+              <small>{firstName}</small>
             </div>
             <div className='form-group'>
               <label htmlFor='lastName'>Last Name </label>
