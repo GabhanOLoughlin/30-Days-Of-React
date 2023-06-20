@@ -2,12 +2,18 @@ import './App.css';
 
 import React, { Component } from 'react';
 
+const User = ({ firstName }) => (
+  <div>
+    <h1>{firstName}</h1>
+  </div>
+)
+
 class App extends Component {
   constructor(props) {
     super(props)
     console.log('I am  the constructor and  I will be the first to run.')
     this.state = {
-      firstName: '',
+      firstName: 'Gabhan',
     }
   }
 
@@ -15,17 +21,23 @@ class App extends Component {
     console.log(
       'I am getDerivedStateFromProps and I will be the second to run.'
     )
-    return null
+    return {firstName: props.firstName}
   }
   componentDidMount() {
     console.log('I am componentDidMount and I will be last to run.')
+    setTimeout(() => {
+      this.setState({
+        firstName: 'Gabhan',
+      })
+    }, 3000)
   }
 
   render() {
-    console.log('I am render and I will be the third to run.')
     return (
       <div className='App'>
         <h1>React Component Life Cycle</h1>
+        <h3>getDerivedStateFromProps</h3>
+        {this.state.firstName}
       </div>
     )
   }
