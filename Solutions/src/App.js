@@ -101,7 +101,9 @@ function App() {
      the is the place where we connect backend api 
      to send the data to the database
      */
-    console.log({state})
+    console.log(this.title.current.value);
+
+    console.log(state)
   }
 
   const { firstName } = validate()
@@ -112,6 +114,15 @@ function App() {
       <form onSubmit={handleSubmit} noValidate>
           <div className='row'>
             <div className='form-group'>
+            <label htmlFor='title'>Title (Uncontrolled) </label>
+              <input
+                type='text'
+                name='title'
+                ref={state.title}
+                onChange={handleChange}
+                placeholder='Title'
+              />
+
               <label htmlFor='firstName'>First Name </label>
               <input
                 type='text'
