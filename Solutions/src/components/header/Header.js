@@ -1,27 +1,20 @@
 import React from 'react';
 
-const Header = (props) => {
-  const {
-    welcome,
-    title,
-    subtitle,
-    author: {firstName, 
-            lastName},
-    date,
-  } = props.data
+import headerStyles from '../../styles/header.module.scss';
 
+const {header, headerWrapper} = headerStyles;
+
+const Header = () => {
   return (
-    <header>
-      <div className='header-wrapper'>
-        <h1>{welcome}</h1>
-        <h2>{title}</h2>
-        <h3>{subtitle}</h3>
-        <p>
-          {firstName} {lastName}
-        </p>
-        <small>{date}</small>
-      </div>
-    </header>
+    <header className={header}>
+    <div className={headerWrapper}>
+      <h1>30 Days Of React</h1>
+      <h2>Getting Started React</h2>
+      <h3>JavaScript Library</h3>
+      <p>Instructor: Gabhan</p>
+      <small>Oct 15, 2020</small>
+    </div>
+  </header>
   )
 }
 
