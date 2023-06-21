@@ -2,6 +2,8 @@ import './App.css';
 
 import React, { Component } from 'react';
 
+import axios from 'axios';
+
 const Country = ({country: {name, capital, flags, languages, population, currency },}) => {
   
   const lengthOfLanguages = languages ? Object.keys(languages).length : -1;
@@ -41,20 +43,17 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.fetchCountryData()
-  }
-
-  fetchCountryData = async () => {
     const url = 'https://restcountries.com/v3.1/all'
-    try {
-      const response = await fetch(url)
-      const data = await response.json()
-      this.setState({
-        data,
+    axios
+      .get(url)
+      .then((response) => {
+        this.setState({
+          data: response.data,
+        })
       })
-    } catch (error) {
-      console.log(error)
-    }
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   render() {
