@@ -69,7 +69,7 @@ const buttonWithStyle = (CompParam) => {
     return <CompParam {...props} style={buttonStyles} />
   }
 }
-const NewButton = buttonWithSuperPower(Button)
+const NewButton = buttonWithStyle(Button)
 
 class App extends Component {
   render() {
