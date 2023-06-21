@@ -1,10 +1,9 @@
 import './index.css';
 
 // index.js
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React from 'react';
+
+import useFetch from './useFetch';
 
 const Country = ({ country: { name, flags, population } }) => {
   return (
@@ -23,27 +22,13 @@ const Country = ({ country: { name, flags, population } }) => {
   )
 }
 
-const App = (props) => {
-  const [data, setData] = useState([])
-
-  useEffect(() => {
-    fetchData()
-  }, [])
-
-  const fetchData = async () => {
-    const url = 'https://restcountries.com/v3.1/all'
-    try {
-      const response = await fetch(url)
-      const data = await response.json()
-      setData(data)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+const App = (props) => {  
+  const url = 'https://restcountries.com/v3.1/all';
+  const data = useFetch(url);
 
   return (
     <div className='App'>
-      <h1>Fetching Data Using Hook</h1>
+      <h1>Fetching Data Using Custom Hooks</h1>
       <h1>Calling API</h1>
       <div>
         <p>There are {data.length} countries in the api</p>
