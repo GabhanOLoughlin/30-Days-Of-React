@@ -2,12 +2,6 @@ import './App.css';
 
 import React, { Component } from 'react';
 
-const User = ({ firstName }) => (
-  <div>
-    <h1>{firstName}</h1>
-  </div>
-)
-
 class App extends Component {
   constructor(props) {
     super(props)
